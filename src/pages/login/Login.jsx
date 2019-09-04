@@ -4,6 +4,7 @@ import { PageHeader, Form, Icon, Input, Button, Checkbox } from 'antd';
 
 class NormalLoginForm extends Component {
   handleSubmit = e => {
+    console.log(this)
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {

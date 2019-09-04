@@ -1,0 +1,26 @@
+.navBtn {
+    width: 40%;
+    padding: 0;
+    float: right;
+    text-align: right;
+}
+
+.myHeader .ant-page-header-heading-extra {
+    width: 40%;
+    padding: 0;
+    float: right;
+    text-align: right;
+    margin-top: 4px;
+}
+
+.myHeader i.anticon.anticon-right-square {
+    font-size: 1.4rem;
+}
+
+p.my-drawer a {
+    color: rgba(0, 0, 0, 0.85) !important;
+}
+
+p.my-drawer i.anticon.anticon-right {
+    float: right;
+}

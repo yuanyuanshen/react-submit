@@ -1,15 +1,12 @@
 import React from 'react';
 import ExtractItem from './ExtractItem'
-import { Tabs,PageHeader } from 'antd';
+import { Tabs} from 'antd';
 import {Route} from 'react-router-dom';
+import Header from '@/components/header/header'
 
 const { TabPane } = Tabs;
 
 function initList(props){
-
-  function goBack(){
-    props.history.push('/');
-  }
 
   function callback(key) {
     console.log(key)
@@ -17,7 +14,10 @@ function initList(props){
   }
 
   return (<div>
-    <PageHeader onBack={goBack} title="我的订单"/>
+    <Header title="我的订单"></Header>
+    {/* <PageHeader onBack={goBack} title="我的订单" className="myHeader" extra={[
+        <Button type="primary" shape="circle" icon="bars"/>
+      ]}/> */}
     <Tabs defaultActiveKey={`${props.location.pathname.split('/')[3]}`} onChange={callback}>
     <TabPane tab="已付" key="1">
       <Route path={`${props.match.path}/1`} component={ExtractItem} />
