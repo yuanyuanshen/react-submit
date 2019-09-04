@@ -17,7 +17,12 @@
     font-size: 1.4rem;
 }
 
-p.my-drawer a {
+.myHeader i.anticon.anticon-bars {
+    font-size: 1.4rem;
+    color: rgba(0, 0, 0, 0.85);
+}
+
+p.my-drawer {
     color: rgba(0, 0, 0, 0.85) !important;
 }
 

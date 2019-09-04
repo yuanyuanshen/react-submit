@@ -48,11 +48,14 @@ class LoadMoreList extends React.Component {
     // 属性变化时设置请求数据
     let currenType = this.props.location.pathname.split('/')[3];
     let type = nextProps.location.pathname.split('/')[3];
+    console.log(currenType)
+    console.log(type)
     if(currenType !== type){
     }
   };
 
   componentDidMount() {
+    console.log('11111111')
     let currenType = this.props.location.pathname.split('/')[3];
     this.setFlagBarPos(currenType);
   }

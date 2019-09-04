@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { Drawer,PageHeader,Icon} from 'antd';
+import { Drawer,PageHeader,Icon,Button} from 'antd';
 import {withRouter,Link} from "react-router-dom";
 import './header.css'
 
@@ -22,11 +22,18 @@ class Header extends Component {
     this.props.history.push('/');
   };
 
+  goTo (path,e){
+    this.setState({
+      visible: false,
+    });
+    this.props.history.push(path)
+  };
+
   render() {
     return (
       <div>
         <PageHeader onBack={this.goBack} title={this.props.title}  className="myHeader" extra={[
-          <Icon key="1" type="right-square" theme="filled" onClick={this.showDrawer}/>
+          <Icon key="1" type="bars" onClick={this.showDrawer} />
         ]}/>
         <Drawer
           placement="right"
@@ -34,10 +41,10 @@ class Header extends Component {
           onClose={this.onClose}
           visible={this.state.visible}
         >
-          <p className="my-drawer"><Link to={`${this.props.match.path}/passed`} className="nav-link">首页</Link><Icon type="right" /></p>
-          <p className="my-drawer"><Link to={`${this.props.match.path}/passed`} className="nav-link">提现</Link><Icon type="right" /></p>
-          <p className="my-drawer"><Link to={`${this.props.match.path}/passed`} className="nav-link">提现记录</Link><Icon type="right" /></p>
-          <p className="my-drawer"><Link to={`${this.props.match.path}/passed`} className="nav-link">我的订单</Link><Icon type="right" /></p>
+          <p className="my-drawer" onClick={this.goTo.bind(this,'/home')} >首页<Icon type="right" /></p>
+          <p className="my-drawer" onClick={this.goTo.bind(this,'/cash/out')}>提现<Icon type="right" /></p>
+          <p className="my-drawer" onClick={this.goTo.bind(this,'/cash/list')}>提现记录<Icon type="right" /></p>
+          <p className="my-drawer" onClick={this.goTo.bind(this,'/extract/list/1')}>我的订单<Icon type="right" /></p>
         </Drawer>
       </div>
     );
