@@ -44,7 +44,7 @@ class Header extends Component {
           <p className="my-drawer" onClick={this.goTo.bind(this,'/home')} >首页<Icon type="right" /></p>
           <p className="my-drawer" onClick={this.goTo.bind(this,'/cash/out')}>提现<Icon type="right" /></p>
           <p className="my-drawer" onClick={this.goTo.bind(this,'/cash/list')}>提现记录<Icon type="right" /></p>
-          <p className="my-drawer" onClick={this.goTo.bind(this,'/extract/list/1')}>我的订单<Icon type="right" /></p>
+          <p className="my-drawer" onClick={this.goTo.bind(this,'/extract/list')}>我的订单<Icon type="right" /></p>
         </Drawer>
       </div>
     );

@@ -2,6 +2,7 @@ import React from 'react';
 import { List, Avatar, Button, Skeleton } from 'antd';
 import {data1,data2,data3,data4} from './mock'
 import Notify from '../notification/notification'
+import './Extract.css'
 
 // import reqwest from 'reqwest';
 
@@ -46,17 +47,10 @@ class LoadMoreList extends React.Component {
 
   componentWillReceiveProps(nextProps){
     // 属性变化时设置请求数据
-    let currenType = this.props.location.pathname.split('/')[3];
-    let type = nextProps.location.pathname.split('/')[3];
-    console.log(currenType)
-    console.log(type)
-    if(currenType !== type){
-    }
   };
 
   componentDidMount() {
-    console.log('11111111')
-    let currenType = this.props.location.pathname.split('/')[3];
+    let currenType = this.props.pageKey;
     this.setFlagBarPos(currenType);
   }
 
