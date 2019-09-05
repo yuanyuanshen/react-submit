@@ -1,19 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { Modal } from 'antd';
 
 class Dialog extends React.Component {
-
-  showModal = () => {
-    this.setState({
-      visible: true,
-    });
-  };
-
-  handleOk = e => {
-    this.setState({
-      visible: false,
-    });
-  };
+  static propTypes = {
+    transferVisible: PropTypes.func.isRequired,
+    visible: PropTypes.bool.isRequired,
+    title: PropTypes.string.isRequired,
+    des: PropTypes.string.isRequired
+  }
 
   handleCancel = () => {
     this.props.transferVisible(false)

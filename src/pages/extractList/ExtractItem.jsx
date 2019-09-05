@@ -2,6 +2,7 @@ import React from 'react';
 import { List, Avatar, Button, Skeleton } from 'antd';
 import {data1,data2,data3,data4} from './mock'
 import Notify from '../notification/notification'
+import PropTypes from 'prop-types';
 import './Extract.css'
 
 // import reqwest from 'reqwest';
@@ -9,6 +10,10 @@ import './Extract.css'
 const count = 3;
 
 class LoadMoreList extends React.Component {
+  static propsType = {
+    pageKey: PropTypes.string.isRequired
+  }
+
   state = {
     initLoading: true,
     loading: false,

@@ -1,9 +1,14 @@
 import React,{Component} from 'react';
-import { Drawer,PageHeader,Icon,Button} from 'antd';
-import {withRouter,Link} from "react-router-dom";
+import { Drawer,PageHeader,Icon} from 'antd';
+import {withRouter} from "react-router-dom";
+import PropTypes from 'prop-types';
 import './header.css'
 
 class Header extends Component {
+  static propTypes = {
+    title: PropTypes.string.isRequired,
+  };
+
   state = { visible: false };
 
   showDrawer = () => {
