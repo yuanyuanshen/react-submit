@@ -6,6 +6,16 @@
 
 模仿现在比较火的，淘宝返利公众号的功能，包含订单页面，已付、待反利、已反、已失效，提现页面，提现记录以及登录页。其中部分页面&使用方式参照[react-pxq](https://github.com/bailicangdu/react-pxq)项目,star 数量 6359 很有参考意义
 
+1.使用 react 创建页面 √
+
+2.使用 react-router-dom 实现路由 √
+
+3.使用 props-type 做属性检查 √
+
+4.使用 redux 实现状态管理
+
+5.搭建 mock server 模拟数据请求
+
 ---
 
 ### 项目使用
@@ -27,6 +37,12 @@ create-react-app 本身的 webpack 配置文件存在于 node_modules/react-scri
 而且 create-react-app 并不推荐大家这么做，因为这个步骤无法逆转！
 
 npm run eject 之后，react-scripts 命令就失效了哦。因为在 node_modules/下面，都没有 react-scripts/的目录了，它以另外的形式存在于这个项目里面了。
+
+---
+
+### 项目 UI 组件
+
+使用 [Ant Design](https://ant.design/docs/react/introduce-cn) ，相比原生 Html 能快速搭建页面，更专注于 react 相关技术的学习，其实写的是 app 端的淘宝返利一个小项目，后来发现应该使用 [Ant Design Mobile](https://mobile.ant.design/index-cn) 来做移动端的，不过不要紧，我们的注意力不在页面适配上。
 
 ---
 
