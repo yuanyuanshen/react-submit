@@ -2,7 +2,6 @@ import React from 'react'
 import { Modal } from 'antd';
 
 class Dialog extends React.Component {
-  state = { visible: false };
 
   showModal = () => {
     this.setState({
@@ -36,6 +35,7 @@ class Dialog extends React.Component {
       </div>
     );
   }
+
 }
 
 export default Dialog;

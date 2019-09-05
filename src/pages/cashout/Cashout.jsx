@@ -22,7 +22,6 @@ class CashOut extends Component {
   }
 
   handleCashout = (e) => {
-    console.log(this.state.money)
     if(this.state.money <= 0){
       message.error('请输入提现金额')
     }else{
