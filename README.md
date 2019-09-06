@@ -14,7 +14,7 @@
 
 4.使用 redux 实现状态管理
 
-5.搭建 mock server 模拟数据请求
+5.搭建 mock server 模拟数据请求 √
 
 ---
 
@@ -70,6 +70,18 @@ optionalObject: PropTypes.object,
 optionalString: PropTypes.string,
 optionalSymbol: PropTypes.symbol
 ```
+
+---
+
+### mock server 搭建
+
+使用 mocker-api coss-env
+
+在 webpack-dev-server 的 before 钩子函数中搭建服务器
+
+运行：npm run start-mock
+
+访问：localhost:3000/api/getExtractList 查看数据
 
 ---
 

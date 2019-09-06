@@ -1,4 +1,4 @@
-'use strict';
+
 
 // Do this as the first thing so that any code reading it knows the right env.
 process.env.BABEL_ENV = 'development';
@@ -124,6 +124,12 @@ checkBrowsers(paths.appPath, isInteractive)
           )
         );
         console.log();
+      }
+
+      // start mock server
+      if(process.env.MOCK){
+        console.log('/****************************************/')
+        console.log('start mock server')
       }
 
       console.log(chalk.cyan('Starting the development server...\n'));
