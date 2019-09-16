@@ -23,9 +23,7 @@
 8.redux 中添加异步请求
 
 <img src="https://github.com/yuanyuanshen/react-submit/blob/master/public/login.png" width="200px"/>
-
 <img src="https://github.com/yuanyuanshen/react-submit/blob/master/public/order.png" width="200px"/>
-
 <img src="https://github.com/yuanyuanshen/react-submit/blob/master/public/order1.png" width="200px"/>
 
 ---
