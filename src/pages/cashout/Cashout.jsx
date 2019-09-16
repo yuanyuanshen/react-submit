@@ -3,11 +3,19 @@ import { InputNumber,Button,message } from 'antd';
 import Header from '@/components/header/header'
 import './Cashout.css'
 import Dialog from '@/components/dialog/dialog'
+import { connect } from 'react-redux'
+import { addToCashList,resetUseMoney } from '@/store/cashout/action'
+import PropTypes from 'prop-types'
 
 class CashOut extends Component {
+  static propTypes = {
+    cashInfo: PropTypes.object.isRequired,
+    addToCashList:PropTypes.func.isRequired,
+    resetUseMoney:PropTypes.func.isRequired
+  }
+
   state = {
     money: 0,
-    usefulMoney: 800,
     visible: false
   };
 
@@ -25,10 +33,9 @@ class CashOut extends Component {
     if(this.state.money <= 0){
       message.error('请输入提现金额')
     }else{
-      // message.success('提现成功')
-      let sub = this.state.usefulMoney - this.state.money;
+      let sub = this.props.cashInfo.usefulMoney - this.state.money;
+      this.props.resetUseMoney(sub)
       this.setState({
-        usefulMoney: sub,
         money: 0,
         visible: true
       })
@@ -40,7 +47,7 @@ class CashOut extends Component {
       <div>
         <Header title="提现"></Header>
         <div>
-          <div className="remainder">您当前的可提现金额为：￥{this.state.usefulMoney}</div>
+          <div className="remainder">您当前的可提现金额为：￥{this.props.cashInfo.usefulMoney}</div>
           <div className="cashout">
             <div className="to-cashout">请输入提现金额（元）</div>
             <InputNumber 
@@ -60,4 +67,6 @@ class CashOut extends Component {
   }
 }
 
-export default CashOut;
+export default connect(state =>({
+  cashInfo: state.cashInfo
+}),{addToCashList,resetUseMoney})(CashOut);

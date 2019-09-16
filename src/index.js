@@ -3,9 +3,22 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import '../node_modules/antd/dist/antd.css';
 import Route from './router/';
+import {Provider} from 'react-redux';
+import store from '@/store/store';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<Route />, document.getElementById('root'));
+const render = Component => {
+  ReactDOM.render(
+    //绑定redux、热加载
+    <Provider store={store}>
+        <Component />
+    </Provider>,
+    document.getElementById('root'),
+  )
+}
+
+render(Route);
+// ReactDOM.render(<Route />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

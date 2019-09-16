@@ -12,9 +12,15 @@
 
 3.使用 props-type 做属性检查 √
 
-4.使用 redux 实现状态管理
+4.搭建 mock server 模拟数据请求 √
 
-5.搭建 mock server 模拟数据请求 √
+5.使用 redux 实现状态管理 √
+
+6.使用 Immutable
+
+7.项目中添加异步请求
+
+8.redux 中添加异步请求
 
 ---
 
@@ -52,7 +58,7 @@ npm run eject 之后，react-scripts 命令就失效了哦。因为在 node_modu
 
 ---
 
-### React 类型检查（一周有 600w 的下载量）
+### React 类型检查
 
 react 的类型检查 PropTypes 自 React v15.5 起已弃用，请使用[prop-types](https://www.npmjs.com/package/prop-types)
 
@@ -69,6 +75,73 @@ optionalNumber: PropTypes.number,
 optionalObject: PropTypes.object,
 optionalString: PropTypes.string,
 optionalSymbol: PropTypes.symbol
+```
+
+---
+
+### react-redux 状态管理
+
+React-Redux 将所有组件分成两大类：UI 组件（presentational component）和容器组件（container component）。
+
+> UI 组件负责 UI 的呈现，容器组件负责管理数据和逻辑
+
+#### UI 组件
+
+- 只负责 UI 的呈现，不带有任何业务逻辑
+- 没有状态（即不使用 this.state 这个变量）
+- 所有数据都由参数（this.props）提供
+- 不使用任何 Redux 的 API
+
+#### 容器组件
+
+- 负责管理数据和业务逻辑，不负责 UI 的呈现
+- 带有内部状态
+- 使用 Redux 的 API
+
+#### connect
+
+React-Redux 提供 connect 方法，用于从 UI 组件生成容器组件。connect 的意思，就是将这两种组件连起来。
+
+```js
+// CashOut.jsx
+import { connect } from 'react-redux'
+class CashOut extends Component {}
+export default connect(
+  state => ({
+    cashInfo: state.cashInfo
+  }),
+  { addToCashList, resetUseMoney }
+)(CashOut)
+```
+
+为了定义业务逻辑，需要给出下面两方面的信息。
+
+- 输入逻辑：外部的数据（即 state 对象）如何转换为 UI 组件的参数
+  eg：cashInfo
+
+- 输出逻辑：用户发出的动作如何变为 Action 对象，从 UI 组件传出去。
+  eg： addToCashList resetUseMoney
+
+#### Provider 组件
+
+connect 方法生成容器组件以后，需要让容器组件拿到 state 对象，才能生成 UI 组件的参数。
+React-Redux 提供 Provider 组件，可以让容器组件拿到 state。
+
+```js
+import { Provider } from 'react-redux'
+import store from '@/store/store'
+
+const render = Component => {
+  ReactDOM.render(
+    //绑定redux、热加载
+    <Provider store={store}>
+      <Component />
+    </Provider>,
+    document.getElementById('root')
+  )
+}
+
+render(Route)
 ```
 
 ---
@@ -166,3 +239,18 @@ export default Dialog
 ### 参考
 
 1. [create-react-app 工程，如何通过 eject 释放配置文件？](https://newsn.net/say/create-react-app-eject.html)
+2. [React-Redux 的用法](https://www.cnblogs.com/williamjie/p/9591961.html)
+3. [Redux 官方文档](https://redux.js.org/basics/usage-with-react)
+4. [react-redux 工作原理](https://www.jianshu.com/p/fc7470992482)
+5. [Immutable 介绍学习](https://www.cnblogs.com/chris-oil/p/8494337.html)
+6. [Redux 中文文档](http://cn.redux.js.org/)
+7. [前端技术总结 Redux 部分](https://www.kancloud.cn/zhangqh/front/552534)
+8. [初学者的 React 全家桶完整实例](https://www.cnblogs.com/demodashi/p/8476741.html)
+9. [关于 React 全家桶的介绍](https://blog.csdn.net/stwuyiyu/article/details/86140697)
+10. [React 学习系列——prop 和 state](https://juejin.im/post/59e8b74e6fb9a044fd10e135)
+11. [react-router 之嵌套路由](https://www.cnblogs.com/ahaowh/articles/8313208.html)
+12. [create-react-app 入门教程](https://www.jianshu.com/p/77bf3944b0f4)
+13. [react 中使用 prop-types 检测 props 数据类型](https://www.jianshu.com/p/a73fb26c88b5)
+14. [react 中文文档](https://www.reactjscn.com/docs/composition-vs-inheritance.html)
+15. [react-pxq](https://github.com/bailicangdu/react-pxq)
+16. [react + redux 完整的项目，同时写一下个人感悟](https://segmentfault.com/a/1190000007642740)

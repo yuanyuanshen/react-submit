@@ -1,3 +1,4 @@
+const delay = require('mocker-api/utils/delay');
 const proxy = {
   // 获取提现记录列表
   'GET /api/getCashList': [
@@ -169,4 +170,4 @@ const proxy = {
       res.send({ status: 'ok', message: '删除成功！' })
   }
 }
-module.exports = proxy
+module.exports =  delay(proxy, 2000)
