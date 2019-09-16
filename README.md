@@ -22,6 +22,8 @@
 
 8.redux 中添加异步请求
 
+![](https://github.com/yuanyuanshen/react-submit/blob/master/public/login.png)
+
 ---
 
 ### 项目使用
