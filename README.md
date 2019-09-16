@@ -24,9 +24,9 @@
 
 <img src="https://github.com/yuanyuanshen/react-submit/blob/master/public/login.png" width="200px"/>
 
-![](https://github.com/yuanyuanshen/react-submit/blob/master/public/order.png)
+<img src="https://github.com/yuanyuanshen/react-submit/blob/master/public/order.png" width="200px"/>
 
-![](https://github.com/yuanyuanshen/react-submit/blob/master/public/order1.png)
+<img src="https://github.com/yuanyuanshen/react-submit/blob/master/public/order1.png" width="200px"/>
 
 ---
 
