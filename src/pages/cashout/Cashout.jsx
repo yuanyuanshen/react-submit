@@ -35,6 +35,12 @@ class CashOut extends Component {
     }else{
       let sub = this.props.cashInfo.usefulMoney - this.state.money;
       this.props.resetUseMoney(sub)
+      this.props.addToCashList({
+        status: "1",
+        last: this.state.money,
+        state: "待处理",
+        id: new Date()
+        })
       this.setState({
         money: 0,
         visible: true
