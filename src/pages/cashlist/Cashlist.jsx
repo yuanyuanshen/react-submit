@@ -1,26 +1,23 @@
 import React from 'react';
 import Header from '@/components/header/header'
 import { List, message, Spin } from 'antd';
+import { connect } from 'react-redux'
 import InfiniteScroll from 'react-infinite-scroller';
-import {data} from './mock'
 import './Cashlist.css'
 
 class CashList extends React.Component {
   state = {
-    data: [],
     loading: false,
     hasMore: true,
   };
 
   componentDidMount() {
+    console.log(this.props.cashInfo.cashList)
     // this.fetchData(res => {
     //   this.setState({
     //     data: res.results,
     //   });
     // });
-    this.setState({
-      data,
-    });
   }
 
   // fetchData = callback => {
@@ -36,11 +33,10 @@ class CashList extends React.Component {
   // };
 
   handleInfiniteOnLoad = () => {
-    let { data } = this.state;
     this.setState({
       loading: true,
     });
-    if (data.length > 14) {
+    if (this.props.cashInfo.cashList.length > 14) {
       message.warning('Infinite List loaded all');
       this.setState({
         hasMore: false,
@@ -56,7 +52,6 @@ class CashList extends React.Component {
     //   });
     // });
     this.setState({
-      data,
       loading: false,
     });
   };
@@ -75,7 +70,7 @@ class CashList extends React.Component {
             useWindow={false}
           >
             <List
-              dataSource={this.state.data}
+              dataSource={this.props.cashInfo.cashList}
               renderItem={item => (
                 <List.Item key={item.id}>
                   <List.Item.Meta
@@ -99,4 +94,5 @@ class CashList extends React.Component {
   }
 }
 
-export default CashList;
+export default connect(state=>({
+    cashInfo: state.cashInfo}),{})(CashList);

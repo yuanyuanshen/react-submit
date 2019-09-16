@@ -30,10 +30,10 @@ let defaultState = {
     state: "已到账"
     },
     {
-    status: "2",
+    status: "1",
     last: "67",
     id: "2532533365433654",
-    state: "已到账"
+    state: "待处理"
     }
     ],
   usefulMoney: 800,
@@ -42,8 +42,7 @@ let defaultState = {
 export const cashInfo = (state = defaultState , action = {}) => {
   switch(action.type){
     case ADDTOCASHLIST:
-    debugger
-      state.cashList.push(action.value);
+      state.cashList.unshift(action.value);
       return state;
     case RESETUSEMONEY:
       state.usefulMoney = action.value;

@@ -39,7 +39,7 @@ class CashOut extends Component {
         status: "1",
         last: this.state.money,
         state: "待处理",
-        id: new Date()
+        id: new Date().getTime()
         })
       this.setState({
         money: 0,
