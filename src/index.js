@@ -7,6 +7,11 @@ import {Provider} from 'react-redux';
 import store from '@/store/store';
 import * as serviceWorker from './serviceWorker';
 
+// 监听state变化
+store.subscribe(() => {
+  console.log('store发生了变化');
+});
+
 const render = Component => {
   ReactDOM.render(
     //绑定redux、热加载

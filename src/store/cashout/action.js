@@ -1,4 +1,5 @@
-import {ADDTOCASHLIST,RESETUSEMONEY} from './action-type';
+import {ADDTOCASHLIST,RESETUSEMONEY,GETCASHLIST} from './action-type';
+import API from '@/api/api.js'
 
 // 保存表单数据
 export const addToCashList = (value) => {
@@ -12,5 +13,21 @@ export const resetUseMoney = (value) => {
   return {
     type: RESETUSEMONEY,
     value
+  }
+}
+// 获取提现记录列表，保存至redux
+export const getCashList = () => {
+  return async dispatch => {
+    try{
+      const list = await API.getCashList();
+      debugger
+      console.log(list)
+      dispatch({
+        type: GETCASHLIST,
+        cashList: list,
+      })
+    }catch(err){
+      console.error(err);
+    }
   }
 }

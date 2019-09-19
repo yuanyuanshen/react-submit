@@ -3,7 +3,9 @@ import Header from '@/components/header/header'
 import { List, message, Spin } from 'antd';
 import { connect } from 'react-redux'
 import InfiniteScroll from 'react-infinite-scroller';
+import { getCashList } from '@/store/cashout/action'
 import './Cashlist.css'
+import API from '@/api/api.js'
 
 class CashList extends React.Component {
   state = {
@@ -12,12 +14,14 @@ class CashList extends React.Component {
   };
 
   componentDidMount() {
+    // 如果没有请求过则初始化
+    if(!this.props.cashInfo.cashList.length){
+      this.props.getCashList()
+    }
+    // const cashList = await API.getCashList()
+    // const cashList = this.getCashList();
+    console.log(this.props)
     console.log(this.props.cashInfo.cashList)
-    // this.fetchData(res => {
-    //   this.setState({
-    //     data: res.results,
-    //   });
-    // });
   }
 
   // fetchData = callback => {
@@ -95,4 +99,4 @@ class CashList extends React.Component {
 }
 
 export default connect(state=>({
-    cashInfo: state.cashInfo}),{})(CashList);
+    cashInfo: state.cashInfo}),{getCashList})(CashList);

@@ -18,13 +18,13 @@
 
 6.使用 Immutable
 
-7.项目中添加异步请求
+7.项目中添加异步请求 √
 
-8.redux 中添加异步请求
+8.redux-thunk 中间件使用 √
 
-<img src="https://github.com/yuanyuanshen/react-submit/blob/master/public/login.png" width="240px"/>   <img src="https://github.com/yuanyuanshen/react-submit/blob/master/public/order1.png" width="240px"/>   <img src="https://github.com/yuanyuanshen/react-submit/blob/master/public/nav.png" width="240px"/>
+<img src="https://github.com/yuanyuanshen/react-submit/blob/master/public/login.png" width="240px"/> <img src="https://github.com/yuanyuanshen/react-submit/blob/master/public/order1.png" width="240px"/> <img src="https://github.com/yuanyuanshen/react-submit/blob/master/public/nav.png" width="240px"/>
 
-<img src="https://github.com/yuanyuanshen/react-submit/blob/master/public/cashout.png" width="240px"/>   <img src="https://github.com/yuanyuanshen/react-submit/blob/master/public/cashsuccess.png" width="240px"/>   <img src="https://github.com/yuanyuanshen/react-submit/blob/master/public/cashoutlog.png" width="240px"/>
+<img src="https://github.com/yuanyuanshen/react-submit/blob/master/public/cashout.png" width="240px"/> <img src="https://github.com/yuanyuanshen/react-submit/blob/master/public/cashsuccess.png" width="240px"/> <img src="https://github.com/yuanyuanshen/react-submit/blob/master/public/cashoutlog.png" width="240px"/>
 
 ---
 
@@ -162,6 +162,107 @@ render(Route)
 
 ---
 
+### axios 异步请求
+
+src 下新建 api 文件
+
+```
+|-src
+|-|-api
+|-|-|-api.js // 用来写接口
+|-|-|-server.js // 是对axios的封装
+```
+
+server.js
+
+axios 中文文档 查看 axios 配置项
+
+```js
+import axios from 'axios'
+
+const TIMEOUT = 30000 // 设置超时时间
+
+export default class Server {
+  axios(method, url, params) {
+    return new Promise((resolve, reject) => {
+      if (typeof params !== 'object') params = {}
+      const _option = {
+        method,
+        url,
+        baseURL: 'http://localhost:3002',
+        timeout: TIMEOUT,
+        params: null,
+        data: null,
+        headers: null,
+        withCredentials: true, //是否携带cookies发起请求
+        validateStatus: status => {
+          return status >= 200 && status < 300
+        },
+        ...params
+      }
+      axios.request(_option).then(
+        res => {
+          resolve(
+            typeof res.data === 'object' ? res.data : JSON.parse(res.data)
+          )
+        },
+        error => {
+          if (error.response) {
+            reject(error.response.data)
+          } else {
+            reject(error)
+          }
+        }
+      )
+    })
+  }
+}
+```
+
+api.js
+
+```js
+import Server from './server'
+
+class API extends Server {
+  async getExtractList(data = {}) {
+    try {
+      let result = await this.axios('post', '/api/getExtractList', data)
+      return result
+    } catch (err) {
+      throw err
+    }
+  }
+}
+
+export default new API()
+```
+
+---
+
+### redux-thunk
+
+一个关键问题没有解决：异步操作怎么办？Action 发出以后，Reducer 立即算出 State，这叫做同步；Action 发出以后，过一段时间再执行 Reducer，这就是异步。
+
+怎么才能 Reducer 在异步操作结束后自动执行呢？这就要用到新的工具：中间件（middleware）。
+
+Redux 的核心概念其实很简单：将需要修改的 state 都存入到 store 里，发起一个 action 用来描述发生了什么，用 reducers 描述 action 如何改变 state tree 。创建 store 的时候需要传入 reducer，真正能改变 store 中数据的是 store.dispatch API。
+
+```js
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import * as cashout from './cashout/reducer'
+import thunk from 'redux-thunk'
+
+let store = createStore(
+  combineReducers({ ...cashout }),
+  applyMiddleware(thunk) // 使用中间件
+)
+
+export default store
+```
+
+---
+
 ### 问题记录
 
 #### 函数传参数保留 event
@@ -258,3 +359,6 @@ export default Dialog
 14. [react 中文文档](https://www.reactjscn.com/docs/composition-vs-inheritance.html)
 15. [react-pxq](https://github.com/bailicangdu/react-pxq)
 16. [react + redux 完整的项目，同时写一下个人感悟](https://segmentfault.com/a/1190000007642740)
+17. [使用 immutable 优化 React](https://segmentfault.com/a/1190000010438089)
+18. [Redux 中间件之 redux-thunk 使用详解](https://www.jianshu.com/p/a27ab19d3657)
+19. [Redux 入门教程（二）：中间件与异步操作](https://www.cnblogs.com/chaoyuehedy/p/9713167.html)

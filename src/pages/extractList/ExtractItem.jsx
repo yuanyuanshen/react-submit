@@ -1,13 +1,10 @@
 import React from 'react';
 import { List, Avatar, Button, Skeleton } from 'antd';
-import {data1,data2,data3,data4} from './mock'
-import Notify from '../notification/notification'
+import Notify from '@/components/notification/notification'
 import PropTypes from 'prop-types';
 import './Extract.css'
+import API from '@/api/api.js'
 
-// import reqwest from 'reqwest';
-
-const count = 3;
 
 class LoadMoreList extends React.Component {
   static propsType = {
@@ -25,29 +22,17 @@ class LoadMoreList extends React.Component {
    * 设置头部底部标签位置
    * @param  {string} type 数据类型
    */
-  setFlagBarPos = type => {
-    let mockData;
-    switch(type){
-      case '1':
-        mockData = data1;
-        break;
-      case '2':
-        mockData = data2;
-        break;
-      case '3':
-        mockData = data3;
-        break;
-      case '4':
-        mockData = data4;
-        break;
-      default: 
-        mockData = data1;
+  setFlagBarPos = async (type) => {
+    try{
+      let mockData = await API.getExtractList({orderStatus:type})
+      this.setState({
+        data: mockData.data,
+        list: mockData.data,
+        initLoading: false,
+      })
+    }catch(err){
+      console.error(err);
     }
-    this.setState({
-      data: mockData,
-      list: mockData,
-      initLoading: false,
-    })
   }
 
   componentWillReceiveProps(nextProps){
@@ -59,34 +44,7 @@ class LoadMoreList extends React.Component {
     this.setFlagBarPos(currenType);
   }
 
-  // getData = callback => {
-  //   reqwest({
-  //     url: fakeDataUrl,
-  //     type: 'json',
-  //     method: 'get',
-  //     contentType: 'application/json',
-  //     success: res => {
-  //       callback(res);
-  //     },
-  //   });
-  // };
-
   onLoadMore = () => {
-    this.setState({
-      loading: true,
-      list: this.state.data.concat([...new Array(count)].map(() => ({ loading: true, name: {} }))),
-    });
-    setTimeout(()=>{
-      const data = data1.concat(data1)
-      this.setState({
-          data,
-          list: data,
-          loading: false,
-      },() => {
-          window.dispatchEvent(new Event('resize'));
-        }
-      );
-    },3000)
     // this.getData(res => {
     //   const data = this.state.data.concat(res.results);
     //   this.setState(
