@@ -365,11 +365,27 @@ export default Dialog
 在我的订单中，已付、待反 4 个 Tab 页面请求都会发送两次
 
 （1）Request Method: OPTIONS
-（2）Request Method: GET
+（2）Request Method: POST
 
-跨域会分为简单跨域和复杂跨域，复杂跨域会进行预检，判断跨域是否能正常进行会发送（1）请求，返回 200 后继续发送（2）这个请求
+跨域分为:
 
-问题暂未解决，作为遗留问题，有时间会好好研究补上解决方法
+**1.简单跨域**
+**2.复杂跨域**:复杂跨域会进行预检
+
+复杂跨域在发送真正的请求前, 会先发送一个方法为 OPTIONS 的预请求(preflight request), 用于试探服务端是否能接受真正的请求，如果 options 获得的回应是拒绝性质的，比如 404\403\500 等 http 状态，就会停止 post、put 等请求的发出。
+
+有三种方式会导致这种现象：
+
+- 请求方法不是 GET/HEAD/POST
+- POST 请求的 Content-Type 并非 application/x-www-form-urlencoded, multipart/form-data, 或 text/plain
+- 请求设置了自定义的 header 字段
+
+我的项目中出现这种情况是因为使用 POST 请求，Content-Type 设置了 application/json
+
+解决方法：
+
+（1）POST 请求，Content-Type 设置 application/x-www-form-urlencoded
+（2）使用 qs 对 object 进行转换
 
 ---
 
