@@ -19,12 +19,11 @@ export const resetUseMoney = (value) => {
 export const getCashList = () => {
   return async dispatch => {
     try{
-      const list = await API.getCashList();
-      debugger
-      console.log(list)
+      const value = await API.getCashList();
       dispatch({
         type: GETCASHLIST,
-        cashList: list,
+        value,
+        initLoading:false
       })
     }catch(err){
       console.error(err);

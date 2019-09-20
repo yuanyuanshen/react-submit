@@ -21,7 +21,10 @@ export default class Server {
         timeout: TIMEOUT,
         params: null,
         data: null,
-        headers: null,
+        headers: {
+          // 'Content-Type': 'application/x-www-form-urlencoded'
+          // 'Content-Type': 'application/json'
+        },
         withCredentials: true, //是否携带cookies发起请求
         validateStatus:(status)=>{
             return status >= 200 && status < 300;
@@ -34,12 +37,9 @@ export default class Server {
       }else {
         _option.data = params
       }
-      console.log('5555555555555')
       axios.request(_option).then(res=>{
-        console.log('-------------------')
         resolve(typeof res.data === 'object' ? res.data : JSON.parse(res.data))
       },error=>{
-        console.log('-------------------')
         if(error.response){
           reject(error.response.data)
         }else {

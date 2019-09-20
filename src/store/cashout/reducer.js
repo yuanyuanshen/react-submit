@@ -10,6 +10,7 @@ let defaultState = {
     state: "待处理"
   }]
   */
+  initLoading: true,
   cashList:[],
   usefulMoney: 800,
 }
@@ -17,9 +18,9 @@ let defaultState = {
 export const cashInfo = (state = defaultState , action = {}) => {
   switch(action.type){
     case GETCASHLIST:
-    console.log('state')
-    console.log(state)
-    return state;
+    state.cashList = [...action.value]
+    state.initLoading = action.initLoading
+    return {...state}
     case ADDTOCASHLIST:
       state.cashList.unshift(action.value);
       return state;

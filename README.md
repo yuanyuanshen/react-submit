@@ -261,11 +261,32 @@ let store = createStore(
 export default store
 ```
 
+store/action.js
+
+```js
+// 获取提现记录列表，保存至redux
+export const getCashList = () => {
+  return async dispatch => {
+    try {
+      const value = await API.getCashList()
+      // 通过dispatch来更新store
+      dispatch({
+        type: GETCASHLIST,
+        value,
+        initLoading: false
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+```
+
 ---
 
 ### 问题记录
 
-#### 函数传参数保留 event
+#### 1.函数传参数保留 event
 
 ```html
 <p className="my-drawer" onClick={this.goTo.bind(this,'/home')} >首页</p>
@@ -280,7 +301,7 @@ export default store
   };
 ```
 
-#### 子组件修改父组件中 state 方法
+#### 2.子组件修改父组件中 state 方法
 
 为了实现需求网上搜到一种，就用在项目中。看到 React 官方文档上提供的【状态提升】温度的例子，也是通过父组件提供函数，以 pros 形式传递给子组件，子组件调用 props 来修改父组件的 state。
 
@@ -338,6 +359,17 @@ class Dialog extends React.Component {
 }
 export default Dialog
 ```
+
+#### 3.跨域请求预检
+
+在我的订单中，已付、待反 4 个 Tab 页面请求都会发送两次
+
+（1）Request Method: OPTIONS
+（2）Request Method: GET
+
+跨域会分为简单跨域和复杂跨域，复杂跨域会进行预检，判断跨域是否能正常进行会发送（1）请求，返回 200 后继续发送（2）这个请求
+
+问题暂未解决，作为遗留问题，有时间会好好研究补上解决方法
 
 ---
 

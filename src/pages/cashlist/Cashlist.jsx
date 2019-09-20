@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import InfiniteScroll from 'react-infinite-scroller';
 import { getCashList } from '@/store/cashout/action'
 import './Cashlist.css'
-import API from '@/api/api.js'
 
 class CashList extends React.Component {
   state = {
@@ -18,10 +17,6 @@ class CashList extends React.Component {
     if(!this.props.cashInfo.cashList.length){
       this.props.getCashList()
     }
-    // const cashList = await API.getCashList()
-    // const cashList = this.getCashList();
-    console.log(this.props)
-    console.log(this.props.cashInfo.cashList)
   }
 
   // fetchData = callback => {
@@ -74,6 +69,7 @@ class CashList extends React.Component {
             useWindow={false}
           >
             <List
+              loading={this.props.cashInfo.initLoading}
               dataSource={this.props.cashInfo.cashList}
               renderItem={item => (
                 <List.Item key={item.id}>
