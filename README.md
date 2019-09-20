@@ -387,6 +387,50 @@ export default Dialog
 （1）POST 请求，Content-Type 设置 application/x-www-form-urlencoded
 （2）使用 qs 对 object 进行转换
 
+#### 4.修改 store 中 state 视图不更新
+
+在 store/cashout/reducer.js 中
+
+```js
+export const cashInfo = (state = defaultState, action = {}) => {
+  switch (action.type) {
+    case GETCASHLIST:
+      state.cashList = [...action.value]
+      state.initLoading = action.initLoading
+      return state // 这样写 dispatch 后视图是不更新的 因为没有返回新的对象
+    case ADDTOCASHLIST:
+      state.cashList.unshift(action.value)
+      return state
+    case RESETUSEMONEY:
+      state.usefulMoney = action.value
+      return state
+    default:
+      return state
+  }
+}
+```
+
+修改为
+
+```js
+export const cashInfo = (state = defaultState, action = {}) => {
+  switch (action.type) {
+    case GETCASHLIST:
+      state.cashList = [...action.value]
+      state.initLoading = action.initLoading
+      return { ...state } // 修改后可触发视图的更新
+    default:
+      return state
+  }
+}
+```
+
+与 React 推崇的 immutability 有关。
+
+在 React 中，通过“有变化，就一定返回一个新对象；没变化，原对象不做变化直接返回”的原则，永远可以通过判断“新旧变量是否对同一内存内容的引用”来侦测变化，效率上比 deepwatch 高得多。
+
+react 创建新的状态对象的关键是，避免直接修改原对象的方法，而是返回一个新对象。也就是说 react 的 state 里面的引用类型，更改时必须赋予一个新对象，也就是引用地址必须要变。 为什么 React 推荐组件的状态是不可变对象呢？一方面是因为不可变对象方便管理和调试。另一方面是出于性能考虑，当对象组件状态都是不可变对象时，我们在组件的 shouldComponentUpdate 方法中，仅需要比较状态的引用就可以判断状态是否真的改变，从而避免不必要的 render 调用。当我们使用 React 提供的 PureComponent 时，更是要保证组件状态是不可变对象，否则在组件的 shouldComponentUpdate 方法中，状态比较就可能出现错误，因为 PureComponent 执行的是浅比较（比较对象的引用）
+
 ---
 
 ### 参考
@@ -410,3 +454,5 @@ export default Dialog
 17. [使用 immutable 优化 React](https://segmentfault.com/a/1190000010438089)
 18. [Redux 中间件之 redux-thunk 使用详解](https://www.jianshu.com/p/a27ab19d3657)
 19. [Redux 入门教程（二）：中间件与异步操作](https://www.cnblogs.com/chaoyuehedy/p/9713167.html)
+20. [为什么 React 中 this.state 不要直接修改，而是创建新的副本](https://blog.csdn.net/yeyuedulangcy/article/details/84902623)
+21. [react 更新 state 的时候要返回一个全新的引用或者值](https://blog.csdn.net/weixin_34080903/article/details/91378174)
