@@ -38,6 +38,12 @@
 
 浏览器打开[http://localhost:3000](http://localhost:3000)可访问
 
+如果想要看到项目效果使用
+
+```
+npm start-mock // 启动node服务
+```
+
 #### `npm run build`
 
 将工程打包到 build 目录下

@@ -1,0 +1,12 @@
+.myLi li.ant-list-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 16px 16px;
+}
+
+label.mycheckbox.ant-checkbox-wrapper {
+    font-size: 16px;
+    color: #333;
+    font-weight: 600
+}

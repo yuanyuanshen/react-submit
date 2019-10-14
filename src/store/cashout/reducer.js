@@ -19,7 +19,8 @@ export const cashInfo = (state = defaultState , action = {}) => {
   switch(action.type){
     case GETCASHLIST:
     state.cashList = [...action.value]
-    state.initLoading = action.initLoading
+    // state.initLoading = action.initLoading
+    state.initLoading = false
     return {...state}
     case ADDTOCASHLIST:
       state.cashList.unshift(action.value);

@@ -17,6 +17,7 @@ class CashList extends React.Component {
     if(!this.props.cashInfo.cashList.length){
       this.props.getCashList()
     }
+    // this.props.getCashList()
   }
 
   // fetchData = callback => {
