@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { getCashList } from '@/store/cashout/action'
 import { List, InputNumber,Checkbox,Button } from 'antd';
 import './App.css'
+import {cloneDeep} from 'lodash'
 
 const data = [{
   specs: 'PAiBot(2G/32G/64G)',
@@ -35,47 +36,45 @@ const data = [{
 
 class App extends React.Component {
   state = {
-    loading: false,
-    hasMore: true,
+    spaceList: cloneDeep(data),
+    loading: true,
   };
 
   componentDidMount() {
-    // 如果没有请求过则初始化
-    if(!this.props.cashInfo.cashList.length){
-      this.props.getCashList()
-    }
-    // this.props.getCashList()
   }
 
-  handleInfiniteOnLoad = () => {
+  onChangeNum = (index,value) => {
+    const tempData = this.state.spaceList;
+    tempData[index].number = value;
     this.setState({
-      loading: true,
-    });
-    this.setState({
-      loading: false,
+      spaceList:[...tempData]
     });
   };
 
-  onChangeNum = () => {};
-
-  onChange = () => {};
+  submitSpace = () =>{
+    this.setState({
+      spaceList:cloneDeep(data)
+    },()=>{
+      console.log(this.state.spaceList);
+    });
+  };
 
   render() {
     return (
       <div className="App">
-        <Header title="首页"></Header>
+        <Header title="产品规格"></Header>
         <List
       className="myLi"
       size="large"
       itemLayout="horizontal"
-      dataSource={data}
-      renderItem={item => <List.Item extra={
-        <InputNumber size="large" min={item.number} max={100000} defaultValue={item.number} onChange={this.onChangeNum} />
+      dataSource={this.state.spaceList}
+      renderItem={(item,index) => <List.Item extra={
+        <InputNumber size="large" min={item.number} max={100000} defaultValue={item.number} value={item.number} onChange={this.onChangeNum.bind(this,index)} />
         }>
         <div>
         <Checkbox className="mycheckbox" 
-        disabled={item.isdisable}
-        checked={item.ischeck} onChange={this.onChange}>{item.specs}</Checkbox>
+        disabled={true}
+        checked={item.ischeck}>{item.specs}</Checkbox>
         </div>
       </List.Item>}
     />
@@ -85,7 +84,7 @@ class App extends React.Component {
     }}>
     <Button style={{
       width: '100%'
-    }} type="primary" size="large">定制以上型号机型</Button>
+    }} type="primary" size="large" onClick={this.submitSpace}>定制以上型号机型</Button>
     </div>
       </div>
     );
